@@ -15,7 +15,7 @@ namespace Example.WebApi.Controllers
 {
     public class ProductController : ApiController
     {
-        public List<Product> listOfProducts;
+        public static List<Product> listOfProducts;
 
         public ProductController()
         {
@@ -42,10 +42,8 @@ namespace Example.WebApi.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK, product);
             }
-            else
-            {
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Product not found.");
-            }
+            
         }
 
         // POST api/product
@@ -59,10 +57,13 @@ namespace Example.WebApi.Controllers
         */
         public HttpResponseMessage Post([FromUri] Product productToCreate)
         {
-            listOfProducts.Add(productToCreate);
+            if (productToCreate != null)
+            {
+                listOfProducts.Add(productToCreate);
 
-            return Request.CreateResponse(HttpStatusCode.Created, listOfProducts);
-
+                return Request.CreateResponse(HttpStatusCode.Created, listOfProducts);
+            }
+            return Request.CreateResponse(HttpStatusCode.NotFound, "Product not found.");
         }
 
         // PUT api/product/5
@@ -77,7 +78,7 @@ namespace Example.WebApi.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, productToUpdate);
             }
-            else return Request.CreateResponse(HttpStatusCode.NotFound, "Product not found.");
+             return Request.CreateResponse(HttpStatusCode.NotFound, "Product not found.");
         }
 
         // DELETE api/product/5
@@ -90,10 +91,9 @@ namespace Example.WebApi.Controllers
                 listOfProducts.Remove(productToDelete);
                 return Request.CreateResponse(HttpStatusCode.OK, "Product deleted successfully.");
             }
-            else
-            {
+            
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Product not found.");
-            }
+            
         }
     }
 }
