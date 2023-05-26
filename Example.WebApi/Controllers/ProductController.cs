@@ -15,7 +15,7 @@ namespace Example.WebApi.Controllers
 {
     public class ProductController : ApiController
     {
-        public static List<Product> listOfProducts;
+        public List<Product> listOfProducts;
 
         public ProductController()
         {
@@ -49,15 +49,7 @@ namespace Example.WebApi.Controllers
         }
 
         // POST api/product
-       /* public HttpResponseMessage Post([FromBody]  Product productToCreate)
-        {
-            listOfProducts.Add(productToCreate);
-
-            return Request.CreateResponse(HttpStatusCode.Created, listOfProducts);
-
-        }
-       */
-        public HttpResponseMessage Post([FromUri] Product productToCreate)
+        public HttpResponseMessage Post([FromBody]  Product productToCreate)
         {
             listOfProducts.Add(productToCreate);
 
